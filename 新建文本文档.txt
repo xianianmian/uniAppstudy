@@ -10,7 +10,7 @@
 方法一：使用命令上传代码
 
 git add .
-git commit -m "XXXXXX"
+git commit -m "XXXX"
 git push
 
 方法二：使用编辑器：
