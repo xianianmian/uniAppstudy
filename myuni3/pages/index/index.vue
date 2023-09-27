@@ -5,7 +5,7 @@
 			<text class="title">{{title}}</text>
 		</view>
 	</view>
-</template>
+</template> 
 
 <script>
 	export default {

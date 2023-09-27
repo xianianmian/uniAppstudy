@@ -1,0 +1,19 @@
+{
+  "login": [
+      {
+          "id": 1,
+          "username": "zs",
+          "password": "ls"
+      }
+  ],
+  "posts": [
+      {
+          "id": 1,
+          "title": "文章一"
+      },
+      {
+          "id": 2,
+          "title": "文章二"
+      }
+  ]
+}
