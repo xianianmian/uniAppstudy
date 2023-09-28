@@ -42,95 +42,90 @@
 			</view>
 		</view>
 		<!-- 添加幻想 -->
-		<view class="">
-			<uni-fab></uni-fab>
-		</view>
+			<view>
+				<button @click="showDrawer" type="primary">添加内容</button>
+				<uni-drawer ref="showRight" mode="right" :mask-click="false" :width="350">
+					<button @click="closeDrawer" type="primary">关闭Drawer</button>
+					<hxzujian @updateHxlist="updateHxDataList"></hxzujian>
+					<!-- <hxzujian ></hxzujian> -->
+				</uni-drawer>
+			</view>
 </view>
 </template>
 
 <script>
-	import {zhuYeData} from '../../api/huanXiang.js'
+	import {zhuYeData ,zhuYeHx} from '../../api/huanXiang.js'
 	export default {
 		data() {
 			return {
-				huanxiang: [{
-					id: '1',
-					type:'爬山',
-					text: '爬山'
-				}, {
-					id: '2',
-					type:'变成狗',
-					text: '变成狗'
-				}],
+				huanxiang: [],
 				HxDataList: [],
 				imgUrl:[],
 				hxType:'爬山',
 				navindex:1,
-				dogUrl:'https://dog.ceo/api/breeds/image/random',
 				tempId:0
 			}
 		},
 		onLoad() {
 			this.getHxDataList(this.hxType)
+			this.getHXtype()
 		},
 		methods: {
-			// 得到幻想的信息，爬山是本地的 狗是网上的API 因为网上的不全面所以在详情那里没用
+			getHXtype(){
+				zhuYeHx().then(res=>{
+					this.huanxiang = res
+				})
+			},
+			// 得到幻想的信息
 			getHxDataList(type) {
-				this.HxDataList = [];
-				this.imgUrl = [];
-				const requests = [];
-				if(type == '爬山'){
-				
-			  zhuYeData('爬山').then(res=>{
+			  zhuYeData(this.hxType).then(res=>{
+					
 					this.HxDataList = res;
 					this.HxDataList.forEach(x=>{this.imgUrl.push(x.imgUrl)})//轮播图数据
+					
 				})
-				}else{
-					for (let i = 0; i < 5; i++) {
-					  requests.push(uni.request({ url: 'https://dog.ceo/api/breeds/image/random' ,timeout:6000}));
-					}
-					let lastId = 0;
-					function generateUniqueId() {
-					  lastId++;
-					  return lastId;
-					}
-					Promise.all(requests)
-					  .then(responses => {
-					    const newDataList = responses.map((response) => {
-					      return {
-					        id: generateUniqueId(), // 使用一个生成唯一id的函数给每个数据对象生成一个唯一标识
-					        imgUrl: response.data.message,
-									type:'变成狗',
-									text:response.data.message,
-									time:new Date()
-					      };
-					    });
-					    this.HxDataList = [...this.HxDataList, ...newDataList]; // 将新获取的数据添加到原有数据之中
-							this.HxDataList.forEach(x=>{this.imgUrl.push(x.imgUrl)})//轮播图数据
-					  })
-					  .catch(error => {
-					    console.error(error);
-					  });
-				}
-				
 			},
 			//切换导航栏
 			getType( id) {
 			  let index=this.huanxiang.findIndex(item=>{
-					return item.id==id
+					return item.id == id
 				})
 				this.navindex = index+1;
+				this.imgUrl = []
 				this.hxType = this.huanxiang[index].type
-				console.log(this.hxType,'ss');
 				this.getHxDataList(this.hxType)
 			},
 			//查看幻想详细信息 
 			intoDetail(id,type){
 				uni.navigateTo({
-					// url:`/pages/huanXiangD/huanXiangD?id=${id}&type=${type}`
-					url:`/pages/huanXiangD/huanXiangD?id=${id}&type=${type}`
+					url:`/pages/huanXiangD/huanXiangD?id=${id}&type=${type}`,
+					success:()=>{
+						console.log(id,type);
+					}
 				})
-			}
+			},
+			//刷新幻想信息列表
+			updateHxDataList(newData){
+				this.HxDataList = newData
+				this.imgUrl = []
+				this.HxDataList.forEach(x=>{this.imgUrl.push(x.imgUrl)})//轮播图数据
+			},
+			//两开关
+			showDrawer() {
+				this.$refs.showRight.open();
+			},
+			closeDrawer() {
+				//刷
+				console.log(this.hxType);
+				this.$refs.showRight.close();
+				uni.reLaunch({
+					url: `/pages/zhuye/zhuye`,
+					success:res=>{
+						
+						
+					}
+				});
+			},
 		}
 	}
 </script>
@@ -209,7 +204,7 @@
 			}
 		}
 
-		.lue {
+		.lue span {
 			-webkit-line-clamp: 5;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;

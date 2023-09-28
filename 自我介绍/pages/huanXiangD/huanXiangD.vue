@@ -18,6 +18,7 @@
 </template>
 
 <script>
+		import {huanXiangD} from '../../api/huanXiang.js'
 	export default {
 	  data() {
 	    return {
@@ -31,25 +32,11 @@
 	  methods: {
 			//得到详细的数据，因为狗的接口问题，暂时不会写 下面的作废
 	    getShuju(id, type) {
-	      var tempArr = [];
-	      if(type == "爬山"){
-					uni.request({
-					  url: "/static/files/HxData.json",
-					  success: res => {
-					    tempArr = res.data.data;
-					    tempArr.forEach(x => {
-					      if (x.id == id) {
-					        this.shuju = x;
-					        console.log(this.shuju,'sss');
-					      }
-					    });
-					  }
-					});
-				}else{
-					
-				}
-	    }
-	  }
+	      huanXiangD(id,type).then(res=>{
+					this.shuju = res[0]
+				})
+			}
+		}
 	};
 
 </script>

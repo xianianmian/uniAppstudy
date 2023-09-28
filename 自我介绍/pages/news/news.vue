@@ -1,6 +1,6 @@
 <template>
 	<view>
-		asdfghjk
+		ddd
 	</view>
 </template>
 
@@ -8,11 +8,12 @@
 	export default {
 		data() {
 			return {
-				
+				imageValue:[]
 			}
 		},
 		methods: {
-			
+			// 获取上传状态
+						
 		}
 	}
 </script>

@@ -1,19 +1,15 @@
 {
-  "login": [
-      {
-          "id": 1,
-          "username": "zs",
-          "password": "ls"
-      }
-  ],
-  "posts": [
-      {
-          "id": 1,
-          "title": "文章一"
-      },
-      {
-          "id": 2,
-          "title": "文章二"
-      }
+  "HXtype":[
+    {
+      "id":1,
+      "text":"爬山",
+      "type":"爬山"
+
+    },
+    {
+      "id":2,
+      "text":"变成狗",
+      "type":"变成狗"
+    }
   ]
 }
