@@ -7,14 +7,14 @@ import {request} from '../utils/request.js'
 		 method: "GET",
 	 })
  }
- //的好幻想种类的数据
+ //得到幻想种类的数据
  export function zhuYeHx(){
 	 return request({
 		 url:'/api2/HXtype',
 		 method:"GET"
 	 })
  }
- //更加id和type得到具体的数据
+ //增加id和type得到具体的数据
  export function huanXiangD(id,type){
  	 return request({
  		 url:`/api1/data?id=${id}&type=${type}`,
@@ -27,6 +27,22 @@ import {request} from '../utils/request.js'
 		 url:'/api1/data',
 		 method:"POST",
 		 data:data
+	 })
+ }
+ //修改某天的数据
+ export function gaiHxData(id,data){
+	 return request({
+	 		 url:`/api1/data/${id}`,
+	 		 method:"PUT",
+	 		 data:data
+	 })
+ }
+ 
+ //删除某天的数据
+ export function deleteHxData(id){
+	 return request({
+	 		 url:`/api1/data/${id}`,
+	 		 method:"DELETE",
 	 })
  }
  

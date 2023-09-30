@@ -31,9 +31,10 @@
 </template>
 
 <script>
-	import {putHxData ,zhuYeData} from "../../api/huanXiang.js"
+	import {putHxData ,zhuYeData,gaiHxData} from "../../api/huanXiang.js"
 	export default {
 		name: "hxzujian",
+    props:['openType'],
 		data() {
 			return {
 				value: 0,
@@ -55,7 +56,6 @@
 					imgUrl:'',
 					type:'爬山'
 				},
-
 			}
 		},
 		methods: {
@@ -66,7 +66,7 @@
 			// 选择以后
 			select(e){
 				console.log(e,e.tempFilePaths[0]);
-				this.formData.imgUrl = e.tempFilePaths[0]
+				this.formData.imgUrl = e.tempFilePaths
 			},
 			//表单提交
 			submit(){
@@ -76,15 +76,31 @@
 				obj.id = parseInt(obj.id);
 				
 				// console.log(obj);
-				if(obj){
+				if(obj && this.openType == "POST"){
 					putHxData(tiJiaoData).then(res=>{
+          uni.showToast({
+            title: '提交成功',
+            icon: 'success'
+          })
 						return zhuYeData(this.formData.type);
 					}).then(res=>{
 						this.$emit('updateHxlist', res);
 					}).catch(err=>{
 						console.log(err);
 					})
-				}
+				}else{
+          gaiHxData(Number(this.formData.id),tiJiaoData).then(res=>{
+            uni.showToast({
+            title: '修改成功',
+            icon: 'success'
+          })
+						return zhuYeData(this.formData.type);
+					}).then(res=>{
+						this.$emit('updateHxlist', res);
+					}).catch(err=>{
+						console.log(err);
+					})
+        }
 			}
 		}
 	}

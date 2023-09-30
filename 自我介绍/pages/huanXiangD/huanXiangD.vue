@@ -8,7 +8,16 @@
 				{{shuju.time}}
 			</view>
 			<view class="img">
-				<img :src="shuju.imgUrl" alt="">
+<uni-swiper-dot :info="info" :current="current" field="content" :mode="mode">
+	<swiper class="swiper-box" @change="change">
+		<swiper-item v-for="(item ,index) in info" :key="index">
+			<view class="swiper-item">
+				<img :src="item.content" alt="">
+				{{item.content}}
+			</view>
+		</swiper-item>
+	</swiper>
+</uni-swiper-dot>
 			</view>
 			<view class="text">
 				{{shuju.text}}
@@ -22,11 +31,14 @@
 	export default {
 	  data() {
 	    return {
-	      shuju: ""
-	    };
+	      shuju: "",
+				imgIndex:0,
+				info: [],
+				current: 0,
+				mode: 'nav',
+	    }
 	  },
 	  onLoad(options) {
-			
 	    this.getShuju(options.id, options.type);
 	  },
 	  methods: {
@@ -34,6 +46,10 @@
 	    getShuju(id, type) {
 	      huanXiangD(id,type).then(res=>{
 					this.shuju = res[0]
+					res[0].imgUrl.forEach((item)=>{
+						this.info.push({content:item})
+					})
+					// console.log(this.info)
 				})
 			}
 		}

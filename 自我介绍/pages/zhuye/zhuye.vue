@@ -6,7 +6,7 @@
 		<!-- 幻想导航栏 -->
 		<view class="huanxiang">
 		  <view class="huanxiang-item " 
-			v-for="(item,index) in huanxiang" :key="item.id" 
+			v-for="(item) in huanxiang" :key="item.id" 
 			@click="getType(item.id)"
 			:class="navindex==item.id?'active':''"
 			>
@@ -33,12 +33,14 @@
 		@click="intoDetail(item.id,item.type)">
 			<view class="lue">
 				<view class="time">
-					<p>大概时间：{{item.time}}</p>
+					<p>大概时间：{{item.time}} </p>
+					<p><button @click.stop="changeHxDatalist">修改</button></p>
+					<p><button @click.stop="deleteHxDatalist(item.id)">删除</button></p>
 				</view>
 				<span>{{item.text}}</span>
 			</view>
 			<view class="img">
-				<img :src="item.imgUrl" alt="">
+				<img :src="item.imgUrl[0]" alt="空">
 			</view>
 		</view>
 		<!-- 添加幻想 -->
@@ -46,15 +48,15 @@
 				<button @click="showDrawer" type="primary">添加内容</button>
 				<uni-drawer ref="showRight" mode="right" :mask-click="false" :width="350">
 					<button @click="closeDrawer" type="primary">关闭Drawer</button>
-					<hxzujian @updateHxlist="updateHxDataList"></hxzujian>
-					<!-- <hxzujian ></hxzujian> -->
+					<hxzujian @updateHxlist="updateHxDataList"  :openType="openType"></hxzujian>
 				</uni-drawer>
 			</view>
 </view>
 </template>
 
 <script>
-	import {zhuYeData ,zhuYeHx} from '../../api/huanXiang.js'
+	import {zhuYeData ,zhuYeHx ,deleteHxData} from '../../api/huanXiang.js'
+	import {chuLiImg ,chuliLunBo} from '../../utils/somgFunction.js'
 	export default {
 		data() {
 			return {
@@ -63,7 +65,7 @@
 				imgUrl:[],
 				hxType:'爬山',
 				navindex:1,
-				tempId:0
+        openType:''
 			}
 		},
 		onLoad() {
@@ -71,18 +73,18 @@
 			this.getHXtype()
 		},
 		methods: {
+			//获取幻想的种类
 			getHXtype(){
 				zhuYeHx().then(res=>{
 					this.huanxiang = res
 				})
 			},
 			// 得到幻想的信息
-			getHxDataList(type) {
+			getHxDataList() {
 			  zhuYeData(this.hxType).then(res=>{
-					
 					this.HxDataList = res;
-					this.HxDataList.forEach(x=>{this.imgUrl.push(x.imgUrl)})//轮播图数据
-					
+					this.imgUrl = chuliLunBo(this.HxDataList)
+					this.HxDataList = chuLiImg(this.HxDataList)
 				})
 			},
 			//切换导航栏
@@ -107,22 +109,35 @@
 			//刷新幻想信息列表
 			updateHxDataList(newData){
 				this.HxDataList = newData
-				this.imgUrl = []
-				this.HxDataList.forEach(x=>{this.imgUrl.push(x.imgUrl)})//轮播图数据
+				this.HxDataList = chuLiImg(this.HxDataList)
 			},
+      //修改幻想信息
+      changeHxDatalist(){
+        this.$refs.showRight.open();
+        this.openType = "PUT"
+      },
+      //删除幻想信息
+      deleteHxDatalist(id){ 
+        deleteHxData(id).then(res=>{
+          uni.showToast({
+            title: '删除成功',
+            icon: 'success'
+          })
+          uni.reLaunch({
+            url: '/pages/zhuye/zhuye'
+          })
+        })
+      },
 			//两开关
 			showDrawer() {
 				this.$refs.showRight.open();
+        this.openType = "POST"
 			},
 			closeDrawer() {
-				//刷
-				console.log(this.hxType);
 				this.$refs.showRight.close();
 				uni.reLaunch({
 					url: `/pages/zhuye/zhuye`,
 					success:res=>{
-						
-						
 					}
 				});
 			},
@@ -131,6 +146,8 @@
 </script>
 
 <style lang="scss">
+	$kai : rgba(177, 201, 65, 1);
+	$bai :rgba(249, 248, 246, 1);
 	header {
 		background: rgba(177, 201, 65, 0.8);
 		height: 80rpx;
@@ -138,7 +155,7 @@
 
 		h2 {
 			text-align: center;
-			color: rgba(249, 248, 246, 1);
+			color: $bai;
 		}
 	}
 
@@ -170,7 +187,7 @@
 		display: flex;
 
 		.huanxiang-item {
-			border: 1rpx solid rgba(177, 201, 65, 1);
+			border: 1rpx solid $kai;
 			border-radius: 5rpx;
 			margin: 10rpx;
 			width: 50%;
@@ -187,8 +204,8 @@
 			}
 		}
 		.huanxiang-item.active{
-			h3{	color:rgba(177, 201, 65, 1);	}
-			.text{color:rgba(177, 201, 65, 1);}
+			h3{	color:$kai	}
+			.text{color:$kai}
 		}
 	}
 
@@ -204,12 +221,24 @@
 			}
 		}
 
-		.lue span {
-			-webkit-line-clamp: 5;
+		.lue {
+			.time{
+				display: flex;
+				p{
+					width: 50%;
+					button{
+						background-color: $kai;
+						color:$bai;
+					}
+				}
+			}
+			span {
+				-webkit-line-clamp: 5;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			}
 		}
 	}
 </style>
