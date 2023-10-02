@@ -1,6 +1,6 @@
 <template>
 	<view>
-
+	<button @click="ceshi">ceshi</button>
 	</view>
 </template>
 
@@ -32,8 +32,17 @@
 						this.shuju = res[0]
 					})
 					console.log(this.shuju);
+				},
+				ceshi(){
+					uni.request({
+						url:"http://127.0.0.1:8081/hxdata",
+						success:res=>{
+							console.log(res);
+						}
+					})
 				}
-			}
+			},
+			
 	}
 </script>
 
