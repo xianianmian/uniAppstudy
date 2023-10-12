@@ -1,40 +1,34 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-        {
-            "path" : "pages/zhuye/zhuye",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "我的幻想"
-            }
-        },
 				{
-            "path" : "pages/shop/shop",
+            "path" : "pages/login/login",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": ""
             }
             
-        }
-        ,{
+        },
+				{
             "path" : "pages/user/user",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": ""
             }
         }
-        ,{
-            "path" : "pages/news/news",
+				,{
+            "path" : "pages/zhuye/zhuye",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": ""
+                "navigationBarTitleText": "我的幻想"
             }
-        },{
+        }
+        ,{
             "path" : "pages/huanXiangD/huanXiangD",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": ""
             }
-        }
+        }	
         
     ],
 		"window": {
@@ -45,41 +39,29 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "rgba(177, 201, 65, 1) ",
+		"navigationBarBackgroundColor": "#B1C941",
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {},
 	"tabBar": {
 		"color": "#7A7E83",
-			"selectedColor": "#3cc51f",
-			"borderStyle": "black",
-			"backgroundColor": "#ffffff",
-			"list": [
-				{
-				"pagePath": "pages/zhuye/zhuye",
-				"iconPath": "static/imgs/icons/pro-home.png",
-				"selectedIconPath": "static/imgs/icons/pro-home (1).png",
-				"text": "主页"
-			},
-				{
-				"pagePath": "pages/news/news",
-				"iconPath": "static/imgs/icons/pro-email.png",
-				"selectedIconPath": "static/imgs/icons/pro-email (1).png",
-				"text": "信息"
-			},
-				{
-				"pagePath": "pages/user/user",
-				"iconPath": "static/imgs/icons/pro-user.png",
-				"selectedIconPath": "static/imgs/icons/pro-user (1).png",
-				"text": "用户中心"
-			},
-				{
-				"pagePath": "pages/shop/shop",
-				"iconPath": "static/imgs/icons/pro-goods.png",
-				"selectedIconPath": "static/imgs/icons/pro-goods (1).png",
-				"text": "商城"
-			}
-			]
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+			"pagePath": "pages/zhuye/zhuye",
+			"iconPath": "static/imgs/icons/pro-home.png",
+			"selectedIconPath": "static/imgs/icons/pro-home (1).png",
+			"text": "主页"
+		},
+			{
+			"pagePath": "pages/user/user",
+			"iconPath": "static/imgs/icons/pro-user.png",
+			"selectedIconPath": "static/imgs/icons/pro-user (1).png",
+			"text": "用户中心"
+		}
+		]
 	},
 	"easycom": {
 			"autoscan": true,

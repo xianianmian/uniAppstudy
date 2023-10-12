@@ -50,11 +50,11 @@
 				],
 				// 表单数据
 				formData: {
-					id: '',
 					text: '',
 					time:'',
 					imgUrl:'',
-					type:'爬山'
+					type:'爬山',
+					id:''
 				},
 			}
 		},
@@ -65,23 +65,16 @@
 			},
 			// 选择以后
 			select(e){
-				console.log(e,e.tempFilePaths[0]);
-				this.formData.imgUrl = e.tempFilePaths
+				this.formData.imgUrl = JSON.stringify(this.formData.imgUrl + e.tempFilePaths.join(""))
+				console.log(this.formData.imgUrl);
 			},
 			//表单提交
 			submit(){
 				//数据提交请求
-				let tiJiaoData = JSON.stringify(this.formData)
-				let obj = JSON.parse(tiJiaoData);
-				obj.id = parseInt(obj.id);
-				
-				// console.log(obj);
-				if(obj && this.openType == "POST"){
+				let tiJiaoData = this.formData
+				console.log(tiJiaoData,'ss');
+				if(tiJiaoData && this.openType == "POST"){
 					putHxData(tiJiaoData).then(res=>{
-          uni.showToast({
-            title: '提交成功',
-            icon: 'success'
-          })
 						return zhuYeData(this.formData.type);
 					}).then(res=>{
 						this.$emit('updateHxlist', res);
@@ -89,11 +82,8 @@
 						console.log(err);
 					})
 				}else{
-          gaiHxData(Number(this.formData.id),tiJiaoData).then(res=>{
-            uni.showToast({
-            title: '修改成功',
-            icon: 'success'
-          })
+          gaiHxData(tiJiaoData).then(res=>{
+						console.log(res);
 						return zhuYeData(this.formData.type);
 					}).then(res=>{
 						this.$emit('updateHxlist', res);

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的幻想",
+  "usingComponents": {
+    "uni-drawer": "/node-modules/@dcloudio/uni-ui/lib/uni-drawer/uni-drawer",
+    "hxzujian": "/components/hxzujian/hxzujian"
+  }
+}

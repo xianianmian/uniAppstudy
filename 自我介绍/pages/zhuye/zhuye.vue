@@ -40,7 +40,7 @@
 				<span>{{item.text}}</span>
 			</view>
 			<view class="img">
-				<img :src="item.imgUrl[0]" alt="空">
+				 <img :src="item.imgUrl[0]" alt="空"> 
 			</view>
 		</view>
 		<!-- 添加幻想 -->
@@ -76,7 +76,8 @@
 			//获取幻想的种类
 			getHXtype(){
 				zhuYeHx().then(res=>{
-					this.huanxiang = res
+					this.huanxiang = res.data
+					// console.log(this.huanxiang);
 				})
 			},
 			// 得到幻想的信息
@@ -85,6 +86,7 @@
 					this.HxDataList = res;
 					this.imgUrl = chuliLunBo(this.HxDataList)
 					this.HxDataList = chuLiImg(this.HxDataList)
+          console.log(this.HxDataList);
 				})
 			},
 			//切换导航栏

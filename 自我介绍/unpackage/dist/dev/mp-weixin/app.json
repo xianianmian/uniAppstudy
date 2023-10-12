@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/user/user",
+    "pages/zhuye/zhuye",
+    "pages/huanXiangD/huanXiangD"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#B1C941",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/zhuye/zhuye",
+        "iconPath": "static/imgs/icons/pro-home.png",
+        "selectedIconPath": "static/imgs/icons/pro-home (1).png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "static/imgs/icons/pro-user.png",
+        "selectedIconPath": "static/imgs/icons/pro-user (1).png",
+        "text": "用户中心"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

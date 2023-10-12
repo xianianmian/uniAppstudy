@@ -1,13 +1,13 @@
 //处理空图
 export function chuLiImg(imgArr){
-	imgArr.forEach(item =>{
-		let neiArr = item.imgUrl
-		for(let i = 0; i<neiArr.length;i++){
-			if(neiArr[i] !== ""){
-				[neiArr[0],neiArr[i]]=[neiArr[i],neiArr[0]];
-				break;
-			}
-		}
+	imgArr.forEach(x =>{
+    let tempstr = JSON.parse(x.imgUrl == "" ? [] : x.imgUrl).replace(/"/g,"")
+    console.log(tempstr);
+    const resultArray = tempstr.split(/blob:/g);
+    resultArray.shift();
+    let arr = resultArray.map(item=>'blob:'+item)
+    console.log(arr);
+    x.imgUrl = arr
 	});
 	return imgArr
 }
@@ -15,6 +15,15 @@ export function chuLiImg(imgArr){
 
 export function chuliLunBo(obj){
 	let imgUrl = []
-	obj.forEach(x=>{imgUrl.push(x.imgUrl)})
+	obj.forEach(x=>{
+    console.log(x,x.imgUrl);
+    let tempstr = JSON.parse(x.imgUrl == "" ? [] : x.imgUrl).replace(/"/g,"")
+    console.log(tempstr);
+    const resultArray = tempstr.split(/blob:/g);
+    resultArray.shift();
+    let arr = resultArray.map(item=>'blob:'+item)
+    console.log(arr);
+    imgUrl.push(arr)
+	})
 	return imgUrl.flat(Infinity).filter(item => item != "")
 }
