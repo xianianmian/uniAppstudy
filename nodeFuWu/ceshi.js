@@ -10,4 +10,4 @@ for (key in imgArr){
     }
   }
 }
-console.log(imgArr);
+console.log(imgArr,'s');
